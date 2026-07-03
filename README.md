@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kamal Coffee
 
-## Getting Started
+Official website for **Kamal Coffee** — a premium Vietnamese ready-to-drink iced coffee brand based in Southern California.
 
-First, run the development server:
+The site should feel like a premium beverage advertisement: warm, cinematic, and product-first. The can is the hero.
+
+## Current phase
+
+Kamal is **pre-retail** and **farmers-market-first** in Los Angeles and Orange County. This repo is a marketing site, not an ecommerce store. See [docs/scope.md](docs/scope.md) for what is in and out of scope.
+
+## Tech stack
+
+- [Next.js 16](https://nextjs.org) (App Router)
+- [React 19](https://react.dev)
+- [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS v4](https://tailwindcss.com)
+
+## Project docs
+
+| File | Purpose |
+|------|---------|
+| [docs/brand.md](docs/brand.md) | Brand voice, visual direction, and design principles |
+| [docs/design-tokens.md](docs/design-tokens.md) | Colors, typography, and spacing for implementation |
+| [docs/content.md](docs/content.md) | Approved copy and section messaging |
+| [docs/scope.md](docs/scope.md) | What we are and are not building |
+| [docs/assets.md](docs/assets.md) | Image requirements and file naming |
+| [TODO.md](TODO.md) | Milestone checklist and upcoming work |
+| [DECISIONS.md](DECISIONS.md) | Record of project decisions |
+| [AGENTS.md](AGENTS.md) | Guidance for AI coding agents |
+
+## Getting started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other commands:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build   # production build
+npm run start   # serve production build
+npm run lint    # run ESLint
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/              # Next.js App Router (pages, layout, global styles)
+public/           # Static assets (images, icons)
+docs/             # Brand, content, and scope documentation
+components/       # Shared UI components (future milestones)
+lib/              # Constants and helpers (future milestones)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## For contributors and AI agents
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Before writing code, read:
 
-## Deploy on Vercel
+1. [docs/scope.md](docs/scope.md) — do not add ecommerce features
+2. [docs/brand.md](docs/brand.md) — match the warm, premium visual direction
+3. [AGENTS.md](AGENTS.md) — Next.js 16 notes and project conventions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+When implementing UI, use tokens from [docs/design-tokens.md](docs/design-tokens.md) and copy from [docs/content.md](docs/content.md).
