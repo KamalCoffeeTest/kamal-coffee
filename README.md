@@ -2,11 +2,11 @@
 
 Official website for **Kamal Coffee** — a premium Vietnamese ready-to-drink iced coffee brand based in Southern California.
 
-The site should feel like a premium beverage advertisement: warm, cinematic, and product-first. The can is the hero.
+The site feels like a premium beverage advertisement: warm, cinematic, and product-first. The can is the hero.
 
 ## Current phase
 
-Kamal is **pre-retail** and **farmers-market-first** in Los Angeles and Orange County. This repo is a marketing site, not an ecommerce store. See [docs/scope.md](docs/scope.md) for what is in and out of scope.
+Kamal is **pre-retail** and **farmers-market-first** in Los Angeles and Orange County. This is a marketing site, not an ecommerce store. See [docs/scope.md](docs/scope.md) for what is in and out of scope.
 
 ## Tech stack
 
@@ -55,12 +55,48 @@ npm run lint    # run ESLint
 ## Project structure
 
 ```
-app/              # Next.js App Router (pages, layout, global styles)
-public/           # Static assets (images, icons)
-docs/             # Brand, content, and scope documentation
-components/       # Shared UI components (future milestones)
-lib/              # Constants and helpers (future milestones)
+app/
+  layout.tsx            # root layout, fonts, metadata
+  page.tsx              # homepage
+  globals.css           # design tokens + Tailwind
+  icon.tsx              # favicon
+  opengraph-image.tsx   # social sharing image
+components/
+  site-header.tsx       # sticky header with wordmark + nav
+  site-footer.tsx       # footer with contact links
+  section.tsx           # reusable section wrapper
+  can-illustration.tsx  # placeholder can SVG (replace with photography)
+  sections/             # homepage sections (one question each)
+lib/
+  constants.ts          # site copy, FAQ, nav links
+public/
+  images/               # product photography (hero/, product/, brand/)
+  og/                   # static OG assets
+docs/                   # brand, content, and scope documentation
 ```
+
+## Homepage sections
+
+Each section answers exactly one question:
+
+1. Hero — What is Kamal?
+2. Product intro — What makes it special?
+3. Allulose — What is allulose?
+4. Dairy-free / vegan — Is it dairy-free and vegan?
+5. Vietnamese coffee — What is Vietnamese coffee?
+6. Our Story — Who is behind Kamal?
+7. Find Us — Where can I find Kamal?
+8. FAQ — What else should I know?
+
+## Deploy
+
+This project is ready to deploy on [Vercel](https://vercel.com):
+
+1. Push the repo to GitHub
+2. Import the project in Vercel
+3. Vercel auto-detects Next.js — no extra config required
+
+Preview deployments are created automatically for each pull request.
 
 ## For contributors and AI agents
 
@@ -71,3 +107,9 @@ Before writing code, read:
 3. [AGENTS.md](AGENTS.md) — Next.js 16 notes and project conventions
 
 When implementing UI, use tokens from [docs/design-tokens.md](docs/design-tokens.md) and copy from [docs/content.md](docs/content.md).
+
+## Next steps
+
+- Replace `CanIllustration` placeholder with real product photography (see [docs/assets.md](docs/assets.md))
+- Add confirmed farmers market dates to Find Us section
+- Create `/story` and `/find-us` pages when content is ready

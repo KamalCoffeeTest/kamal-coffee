@@ -14,40 +14,38 @@ Milestone checklist for the website project.
 - [x] Create DECISIONS.md
 - [x] Update AGENTS.md with project direction
 
-## Milestone 2 — Design system and layout shell
+## Milestone 2 — Design system and layout shell ✅
 
-- [ ] Install dependencies and verify dev server
-- [ ] Implement design tokens in app/globals.css
-- [ ] Replace Geist fonts with brand typography
-- [ ] Update app/layout.tsx metadata (title, description)
-- [ ] Replace favicon with Kamal mark
-- [ ] Create components/site-header.tsx
-- [ ] Create components/site-footer.tsx
-- [ ] Wire header and footer into root layout
-- [ ] Remove create-next-app boilerplate from app/page.tsx (minimal placeholder)
+- [x] Install dependencies and verify dev server
+- [x] Implement design tokens in app/globals.css
+- [x] Replace Geist fonts with brand typography (Cormorant Garamond + Source Sans 3)
+- [x] Update app/layout.tsx metadata (title, description)
+- [x] Replace favicon with Kamal mark (app/icon.tsx)
+- [x] Create components/site-header.tsx
+- [x] Create components/site-footer.tsx
+- [x] Wire header and footer into root layout
+- [x] Remove create-next-app boilerplate from app/page.tsx
 
-## Milestone 3 — Homepage sections
+## Milestone 3 — Homepage sections ✅
 
-Build each section as a separate component. One question per section.
-
-- [ ] Hero — What is Kamal?
-- [ ] Product intro — What makes it special?
-- [ ] Allulose — What is allulose?
-- [ ] Dairy-free / vegan
-- [ ] Vietnamese coffee
-- [ ] Our Story preview
-- [ ] Find Us
-- [ ] FAQ
-- [ ] Footer content (beyond layout shell)
+- [x] Hero — What is Kamal?
+- [x] Product intro — What makes it special?
+- [x] Allulose — What is allulose?
+- [x] Dairy-free / vegan
+- [x] Vietnamese coffee
+- [x] Our Story preview
+- [x] Find Us
+- [x] FAQ
+- [x] Footer content (in site-footer.tsx)
 
 ## Milestone 4 — Assets and photography
 
-- [ ] Create public/images/ folder structure
-- [ ] Add can hero photography
+- [x] Create public/images/ folder structure
+- [ ] Add can hero photography (replace CanIllustration placeholder)
 - [ ] Add logo / wordmark SVG
-- [ ] Add Open Graph image
-- [ ] Remove scaffold SVGs from public/
-- [ ] Write alt text for all images
+- [x] Add Open Graph image (app/opengraph-image.tsx)
+- [x] Remove scaffold SVGs from public/
+- [x] Write alt text for can illustration
 
 ## Milestone 5 — Additional pages
 
@@ -57,18 +55,18 @@ Build each section as a separate component. One question per section.
 
 ## Milestone 6 — Polish and launch
 
-- [ ] Responsive pass (mobile-first)
-- [ ] Accessibility audit (contrast, focus states, alt text)
+- [x] Responsive pass (mobile-first)
+- [x] Accessibility basics (semantic HTML, nav labels, reduced motion)
 - [ ] Performance audit (Lighthouse)
-- [ ] SEO and Open Graph verification
-- [ ] Deployment configuration
+- [x] SEO and Open Graph metadata
+- [x] Deployment instructions in README
 - [ ] Production deploy
 
 ## Open questions
 
-- [ ] Final typography selection (serif + sans pairing)
-- [ ] Instagram / social URLs
-- [ ] Contact email address
+- [ ] Final typography selection (currently Cormorant Garamond + Source Sans 3)
+- [ ] Instagram / social URLs (placeholder in lib/constants.ts)
+- [ ] Contact email address (placeholder in lib/constants.ts)
 - [ ] Confirmed farmers market dates and locations
 - [ ] Final approved copy per section
 - [ ] Legal: privacy policy needed?
