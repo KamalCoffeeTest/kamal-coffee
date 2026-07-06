@@ -85,16 +85,16 @@ const CSS = `
     --caramel: #C98A4B;
     --gold: #C9963A;
     --gold-light: #DEBB6E;
-    --orange: #D4722A;
-    --orange-deep: #BE6523;
+    --orange: #CD6514;
+    --orange-deep: #B6540B;
     --espresso: #3A2A1A;
     --espresso-deep: #261A0E;
     --ink: #2A2218;
     --ink-soft: #6A5C48;
-    --ink-faint: #9A8A70;
+    --ink-faint: #7C6C52;
     --line: rgba(106,92,72,0.16);
     --navy: #1B2A4A; /* accent only — the wordmark's color on the can */
-    --brown: #8B6F47;
+    --brown: #73562F;
 
     --f-disp: 'DM Serif Display', serif;
     --f-fraunces: 'Fraunces', serif;
@@ -497,8 +497,53 @@ const CSS = `
   .f-base { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 26px; font-size: 11.5px; color: rgba(251,243,226,0.3); font-weight: 300; }
   @media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
-`;
 
+  /* ── Tactile paper texture ── */
+  .paper-texture {
+    position: relative;
+  }
+  .paper-texture::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url('/images/kamal/atmosphere/coffee-beans-linen.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  /* ── Editorial grids ── */
+  .find-grid {
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: clamp(36px, 5.5vw, 84px);
+    align-items: flex-start;
+  }
+  .find-image-container {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(58,42,26,0.12);
+    aspect-ratio: 3 / 4;
+    z-index: 1;
+  }
+  .find-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 880px) {
+    .find-grid {
+      grid-template-columns: 1fr;
+    }
+    .find-image-container {
+      display: none;
+    }
+  }
+`;
 /* ═══════════ ASSET REGISTRY — powers placeholders & the pending badge ═══════════ */
 const AssetCtx = createContext({ report: () => {}, missing: [] });
 
@@ -949,18 +994,24 @@ function CanStage() {
           src={src}
           className="can-companion can-left"
           alt="KAMAL Vietnamese Iced Coffee can companion left"
+          width="432"
+          height="577"
           loading="lazy"
         />
         <img
           src={src}
           className="can-companion can-right"
           alt="KAMAL Vietnamese Iced Coffee can companion right"
+          width="432"
+          height="577"
           loading="lazy"
         />
         <img
           src={src}
           className="can-hero"
           alt="KAMAL Vietnamese Iced Coffee can hero"
+          width="432"
+          height="577"
           loading="lazy"
         />
       </div>
@@ -1066,6 +1117,8 @@ function ColdBand() {
         src={boxSrc}
         alt="KAMAL coffee box"
         style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
+        width="1024"
+        height="572"
         onError={() => setIsBgErr(true)}
       />
       {/* Foreground Hand + Can */}
@@ -1081,6 +1134,8 @@ function ColdBand() {
           bottom: "15.73%",
           willChange: "transform",
         }}
+        width="1024"
+        height="571"
         onError={() => setIsHandErr(true)}
       />
       <div className="band-shade" style={{ mixBlendMode: "multiply", opacity: 0.18 }} />
@@ -1121,10 +1176,55 @@ function Story() {
   );
 }
 
+/* ─────────── breather ─────────── */
+function Breather() {
+  return (
+    <section className="sec" style={{ background: "var(--cream)", padding: "clamp(100px, 15vh, 180px) 0" }}>
+      <div className="wrap">
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+          <Rv>
+            <div style={{
+              width: "100%",
+              maxWidth: "800px",
+              borderRadius: "4px",
+              overflow: "hidden",
+              boxShadow: "0 30px 70px rgba(58,42,26,0.12)",
+              aspectRatio: "16 / 9",
+              marginBottom: "44px"
+            }}>
+              <img
+                src="/images/kamal/atmosphere/coffee-swirl.webp"
+                alt="Espresso coffee swirled with creamy condensed oat milk"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                width="800"
+                height="450"
+                loading="lazy"
+              />
+            </div>
+          </Rv>
+          <Rv delay={150}>
+            <p style={{
+              fontFamily: "var(--f-fraunces)",
+              fontWeight: 430,
+              fontStyle: "italic",
+              fontSize: "clamp(20px, 2.4vw, 28px)",
+              lineHeight: 1.4,
+              color: "var(--ink)",
+              maxWidth: "28ch"
+            }}>
+              Creamy condensed oat milk, swirled low and slow.
+            </p>
+          </Rv>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────── allulose ─────────── */
 function Allulose() {
   return (
-    <section className="sec allu" id="allulose">
+    <section className="sec allu paper-texture" id="allulose">
       <Deco name="deco-sunburst.png" style={{ bottom: "-30px", left: "-50px", width: 190 }} rotate={-10} />
       <div className="wrap">
         <Rv>
@@ -1153,41 +1253,56 @@ function FindUs() {
   return (
     <section className="sec" id="find">
       <div className="wrap">
-        <Rv>
-          <div className="eyebrow">Find us</div>
-          <h2 className="h2">At the markets, every week.</h2>
-          <p className="lede">KAMAL launches where LA's food culture lives — the farmers markets. Cold cans straight from the cooler, and a friendly face behind the table.</p>
-        </Rv>
-        {next && (
-          <Rv delay={100}>
-            <p className="next-line">Next up <em>{next.when}</em> — {next.names}. Come say hi.</p>
+        <div className="find-grid">
+          <div>
+            <Rv>
+              <div className="eyebrow">Find us</div>
+              <h2 className="h2">At the markets, every week.</h2>
+              <p className="lede">KAMAL launches where LA's food culture lives — the farmers markets. Cold cans straight from the cooler, and a friendly face behind the table.</p>
+            </Rv>
+            {next && (
+              <Rv delay={100}>
+                <p className="next-line">Next up <em>{next.when}</em> — {next.names}. Come say hi.</p>
+              </Rv>
+            )}
+            <Rv delay={160}>
+              <ul className="week-list">
+                {order.map((idx) => {
+                  const d = WEEK[idx];
+                  return (
+                    <li key={d.day} className={`week-row ${d.markets.length ? "live" : ""}`}>
+                      <span className="week-day">{d.day}{idx === todayIdx && <span className="today-dot" aria-label="today" />}</span>
+                      <span className="week-markets">
+                        {d.markets.length
+                          ? d.markets.map((m, j) => (
+                              <span key={j}>
+                                <b>{m.n}</b> <span className="mk-meta">{m.m}</span>
+                                {j < d.markets.length - 1 && <span className="sep">·</span>}
+                              </span>
+                            ))
+                          : <span className="week-rest">brew &amp; restock day</span>}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Rv>
+            <Rv delay={220}>
+              <p className="find-note">Our lineup shifts week to week — we post each week's confirmed markets on <a href="https://instagram.com/kamal_coffee" target="_blank" rel="noopener noreferrer">@kamal_coffee</a>. Days and hours can change seasonally, so check each market before heading out.</p>
+            </Rv>
+          </div>
+          <Rv delay={260}>
+            <div className="find-image-container">
+              <img
+                src="/images/kamal/atmosphere/la-palms.webp"
+                alt="LA palm trees silhouetted against a golden hour sunset"
+                width="382"
+                height="510"
+                loading="lazy"
+              />
+            </div>
           </Rv>
-        )}
-        <Rv delay={160}>
-          <ul className="week-list">
-            {order.map((idx) => {
-              const d = WEEK[idx];
-              return (
-                <li key={d.day} className={`week-row ${d.markets.length ? "live" : ""}`}>
-                  <span className="week-day">{d.day}{idx === todayIdx && <span className="today-dot" aria-label="today" />}</span>
-                  <span className="week-markets">
-                    {d.markets.length
-                      ? d.markets.map((m, j) => (
-                          <span key={j}>
-                            <b>{m.n}</b> <span className="mk-meta">{m.m}</span>
-                            {j < d.markets.length - 1 && <span className="sep">·</span>}
-                          </span>
-                        ))
-                      : <span className="week-rest">brew &amp; restock day</span>}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </Rv>
-        <Rv delay={220}>
-          <p className="find-note">Our lineup shifts week to week — we post each week's confirmed markets on <a href="https://instagram.com/kamal_coffee" target="_blank" rel="noopener noreferrer">@kamal_coffee</a>. Days and hours can change seasonally, so check each market before heading out.</p>
-        </Rv>
+        </div>
       </div>
     </section>
   );
@@ -1196,7 +1311,7 @@ function FindUs() {
 /* ─────────── faq ─────────── */
 function FAQ() {
   return (
-    <section className="sec faq-sec" id="faq">
+    <section className="sec faq-sec paper-texture" id="faq">
       <div className="faq-wrap">
         <Rv>
           <div className="eyebrow" style={{ textAlign: "center" }}>Questions</div>
@@ -1292,6 +1407,7 @@ export default function App() {
           <FadeSection><TheCan /></FadeSection>
           <FadeSection><ColdBand /></FadeSection>
           <FadeSection><Story /></FadeSection>
+          <FadeSection><Breather /></FadeSection>
           <FadeSection><Allulose /></FadeSection>
           <FadeSection><FindUs /></FadeSection>
           <FadeSection><FAQ /></FadeSection>

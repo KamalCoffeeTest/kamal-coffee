@@ -51,6 +51,9 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${sans.variable} h-full scroll-smooth antialiased`}
     >
+      <head>
+        <link rel="preload" href="/images/kamal/hero-poster.jpg" as="image" />
+      </head>
       <body className="flex min-h-full flex-col bg-cream font-sans text-espresso">
         <SiteHeader />
         <div className="flex flex-1 flex-col">{children}</div>
