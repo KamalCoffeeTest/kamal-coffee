@@ -68,7 +68,7 @@ const scrollToId = (id) => {
 const ASSET_BASE = "/images/kamal";
 const img = (f) => `${ASSET_BASE}/${f}`;
 
-const CSS = `
+export const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Outfit:wght@300..700&display=swap');
 
   /* hide Next.js layout headers and footers */
@@ -546,9 +546,9 @@ const CSS = `
   }
 `;
 /* ═══════════ ASSET REGISTRY — powers placeholders & the pending badge ═══════════ */
-const AssetCtx = createContext({ report: () => {}, missing: [] });
+export const AssetCtx = createContext({ report: () => {}, missing: [] });
 
-function AssetProvider({ children }) {
+export function AssetProvider({ children }) {
   const [missing, setMissing] = useState([]);
   const report = useCallback((label) => {
     setMissing((m) => (m.includes(label) ? m : [...m, label]));
@@ -557,7 +557,7 @@ function AssetProvider({ children }) {
 }
 
 /* labeled placeholder block — appears wherever an asset file is missing */
-function Slot({ type, file, note, dark, style }) {
+export function Slot({ type, file, note, dark, style }) {
   return (
     <div className={`slot ${dark ? "on-dark" : ""}`} style={style} role="img" aria-label={`Placeholder for ${file}`}>
       <span className="slot-type">{type}</span>
@@ -569,7 +569,7 @@ function Slot({ type, file, note, dark, style }) {
 }
 
 /* image that self-replaces with a labeled Slot when its file is missing */
-function Pic({ src, alt, style, className, type = "Photo", file, note, dark }) {
+export function Pic({ src, alt, style, className, type = "Photo", file, note, dark }) {
   const [err, setErr] = useState(false);
   const { report } = useContext(AssetCtx);
   const label = file || src.split("/").pop();
@@ -580,7 +580,7 @@ function Pic({ src, alt, style, className, type = "Photo", file, note, dark }) {
 
 /* decorative cutout — no inline placeholder (it's ornament), but still
    reports to the pending badge so you remember to export it */
-function Deco({ name, style, rotate = 0 }) {
+export function Deco({ name, style, rotate = 0 }) {
   const [err, setErr] = useState(false);
   const { report } = useContext(AssetCtx);
   const ref = useRef(null);
@@ -631,7 +631,7 @@ function Deco({ name, style, rotate = 0 }) {
 }
 
 /* bottom-left badge listing every missing file; auto-disappears when all exist */
-function PendingBadge() {
+export function PendingBadge() {
   const { missing } = useContext(AssetCtx);
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -653,7 +653,7 @@ function PendingBadge() {
 }
 
 /* ═══════════ SCROLL FADE — sections ease in entering, ease out leaving ═══════════ */
-function FadeSection({ children }) {
+export function FadeSection({ children }) {
   const ref = useRef(null);
   useEffect(() => {
     const el = ref.current; if (!el) return;
@@ -704,14 +704,14 @@ function useReveal() {
   }, []);
   return ref;
 }
-function Rv({ children, delay = 0 }) {
+export function Rv({ children, delay = 0 }) {
   const ref = useReveal();
   return <div ref={ref} className="rv" style={{ transitionDelay: `${delay}ms` }}>{children}</div>;
 }
 
 /* ─────────── data ─────────── */
 /* NOTE: verify this schedule reflects markets you actually attend. */
-const WEEK = [
+export const WEEK = [
   { day: "Sun", full: "Sunday", markets: [
     { n: "Hollywood", m: "Ivar & Selma · 8–1" }, { n: "Mar Vista", m: "Venice & Grand View · 9–2" },
     { n: "Larchmont", m: "Larchmont Blvd · 10–2" }, { n: "Studio City", m: "Ventura Pl · 8–1" }, { n: "Brentwood", m: "Gretna Green · 9–2" },
@@ -723,7 +723,7 @@ const WEEK = [
   { day: "Fri", full: "Friday", markets: [{ n: "Echo Park", m: "Logan & Sunset · PM" }] },
   { day: "Sat", full: "Saturday", markets: [{ n: "Santa Monica", m: "Arizona & 2nd · 8–1" }, { n: "Silverlake", m: "Sunset & Edgecliffe · 8–1:30" }] },
 ];
-function nextMarketInfo() {
+export function nextMarketInfo() {
   const today = new Date().getDay();
   for (let o = 0; o < 7; o++) {
     const i = (today + o) % 7;
@@ -742,7 +742,7 @@ const FAQS = [
 ];
 
 /* ─────────── nav + mobile menu ─────────── */
-function Nav() {
+export function Nav() {
   const [solid, setSolid] = useState(false);
   const [menu, setMenu] = useState(false);
   useEffect(() => {
@@ -757,19 +757,37 @@ function Nav() {
   }, [menu]);
   const goTo = (id) => {
     setMenu(false);
-    setTimeout(() => scrollToId(id), 40);
+    if (typeof window !== "undefined") {
+      const isHome = window.location.pathname === "/" || window.location.pathname === "";
+      if (id === "story") {
+        window.location.href = "/story";
+      } else if (isHome) {
+        setTimeout(() => scrollToId(id), 40);
+      } else {
+        window.location.href = "/#" + id;
+      }
+    }
   };
   const links = [
     { id: "coffee", label: "The Coffee" },
-    { id: "story", label: "Our Story" },
     { id: "allulose", label: "Allulose" },
+    { id: "find", label: "Find Us" },
     { id: "faq", label: "FAQ" },
   ];
   return (
     <>
       <nav className={`nav ${solid ? "solid" : ""}`}>
         <div className="nav-in">
-          <button className="logo" onClick={() => { if (lenisInstance) { lenisInstance.scrollTo(0); } else { window.scrollTo({ top: 0, behavior: "smooth" }); } }} aria-label="KAMAL — back to top">
+          <button className="logo" onClick={() => {
+            if (typeof window !== "undefined") {
+              const isHome = window.location.pathname === "/" || window.location.pathname === "";
+              if (isHome) {
+                if (lenisInstance) { lenisInstance.scrollTo(0); } else { window.scrollTo({ top: 0, behavior: "smooth" }); }
+              } else {
+                window.location.href = "/";
+              }
+            }
+          }} aria-label="KAMAL — back to top">
             <b>KAMAL</b>
             <span className="tagline"><span className="dash" />Bold &amp; Smooth<span className="dash" /></span>
           </button>
@@ -777,7 +795,7 @@ function Nav() {
             {links.map((l) => <li key={l.id}><button className="nav-a" onClick={() => goTo(l.id)}>{l.label}</button></li>)}
           </ul>
           <div className="nav-right">
-            <button className="nav-cta" onClick={() => goTo("find")}>Find Us</button>
+            <button className="nav-cta" onClick={() => goTo("story")}>Our Story</button>
             <button className="burger" onClick={() => setMenu(true)} aria-label="Open menu">
               <span /><span /><span />
             </button>
@@ -789,7 +807,7 @@ function Nav() {
           <button className="menu-close" onClick={() => setMenu(false)} aria-label="Close menu">×</button>
           <div className="menu-mark">KAMAL</div>
           {links.map((l) => <button key={l.id} className="m-link" onClick={() => goTo(l.id)}>{l.label}</button>)}
-          <button className="m-cta" onClick={() => goTo("find")}>Find us this week</button>
+          <button className="m-cta" onClick={() => goTo("story")}>Our Story</button>
           <a className="m-ig" href="https://instagram.com/kamal_coffee" target="_blank" rel="noopener noreferrer">@kamal_coffee</a>
         </div>
       )}
@@ -1146,7 +1164,7 @@ function ColdBand() {
 }
 
 /* ─────────── story ─────────── */
-function Story() {
+export function Story() {
   return (
     <section className="sec" id="story">
       <Deco name="deco-palm.png" style={{ top: "6%", right: "-40px", width: 180 }} rotate={12} />
@@ -1178,7 +1196,7 @@ function Story() {
 }
 
 /* ─────────── breather ─────────── */
-function Breather() {
+export function Breather() {
   return (
     <section className="sec" style={{ background: "var(--cream)", padding: "clamp(100px, 15vh, 180px) 0" }}>
       <div className="wrap">
@@ -1329,8 +1347,19 @@ function FAQ() {
 }
 
 /* ─────────── footer ─────────── */
-function Footer() {
-  const goTo = (id) => scrollToId(id);
+export function Footer() {
+  const goTo = (id) => {
+    if (typeof window !== "undefined") {
+      const isHome = window.location.pathname === "/" || window.location.pathname === "";
+      if (id === "story") {
+        window.location.href = "/story";
+      } else if (isHome) {
+        scrollToId(id);
+      } else {
+        window.location.href = "/#" + id;
+      }
+    }
+  };
   return (
     <footer className="footer">
       <div className="footer-waves" />
@@ -1378,6 +1407,13 @@ export default function App() {
 
     lenisInstance = lenis;
 
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      setTimeout(() => {
+        scrollToId(hash);
+      }, 300);
+    }
+
     const onScroll = () => {
       ScrollTrigger.update();
     };
@@ -1407,8 +1443,6 @@ export default function App() {
           <Melt />
           <FadeSection><TheCan /></FadeSection>
           <FadeSection><ColdBand /></FadeSection>
-          <FadeSection><Story /></FadeSection>
-          <FadeSection><Breather /></FadeSection>
           <FadeSection><Allulose /></FadeSection>
           <FadeSection><FindUs /></FadeSection>
           <FadeSection><FAQ /></FadeSection>
