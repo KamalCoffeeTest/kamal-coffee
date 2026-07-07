@@ -219,10 +219,13 @@ const CSS = `
     border-bottom-color: var(--line);
   }
   .nav-in { display: flex; align-items: center; justify-content: space-between; height: 78px; padding: 0 var(--gutter); }
-  .logo { display: flex; flex-direction: column; align-items: center; line-height: 1; cursor: pointer; user-select: none; background: none; border: none; }
-  .logo b { font-family: var(--f-disp); font-weight: 400; font-size: 27px; letter-spacing: 4px; color: var(--foam); transition: color .45s; text-shadow: 0 1px 14px rgba(38,26,14,0.35); }
-  .logo .tagline { display: flex; align-items: center; gap: 7px; margin-top: 5px; font-size: 8.5px; font-weight: 600; letter-spacing: 3.6px; text-transform: uppercase; color: var(--gold-light); white-space: nowrap; transition: color .45s; }
-  .logo .tagline .dash { width: 16px; height: 1px; background: var(--gold); flex-shrink: 0; opacity: .7; }
+  .logo { display: flex; align-items: center; gap: clamp(8px, 1.5vw, 12px); cursor: pointer; user-select: none; background: none; border: none; text-align: left; text-decoration: none; }
+  .logo-img { width: clamp(34px, 4.5vw, 44px); height: clamp(34px, 4.5vw, 44px); border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.12); }
+  .nav.solid .logo-img { border-color: rgba(43,27,16,0.12); }
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo b { font-family: var(--f-disp); font-weight: 400; font-size: 25px; letter-spacing: 3.5px; color: var(--foam); transition: color .45s; text-shadow: 0 1px 14px rgba(38,26,14,0.35); }
+  .logo .tagline { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 8px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-light); white-space: nowrap; transition: color .45s; }
+  .logo .tagline .dash { width: 14px; height: 1px; background: var(--gold); flex-shrink: 0; opacity: .7; }
   .nav.solid .logo b { color: var(--navy); text-shadow: none; }
   .nav.solid .logo .tagline { color: var(--brown); }
   .nav-links { display: flex; gap: 30px; list-style: none; }
@@ -770,8 +773,11 @@ function Nav() {
       <nav className={`nav ${solid ? "solid" : ""}`}>
         <div className="nav-in">
           <button className="logo" onClick={() => { if (lenisInstance) { lenisInstance.scrollTo(0); } else { window.scrollTo({ top: 0, behavior: "smooth" }); } }} aria-label="KAMAL — back to top">
-            <b>KAMAL</b>
-            <span className="tagline"><span className="dash" />Bold &amp; Smooth<span className="dash" /></span>
+            <img src="/images/brand/logo.png" alt="KAMAL logo" className="logo-img" />
+            <div className="logo-text">
+              <b>KAMAL</b>
+              <span className="tagline"><span className="dash" />Bold &amp; Smooth<span className="dash" /></span>
+            </div>
           </button>
           <ul className="nav-links">
             {links.map((l) => <li key={l.id}><button className="nav-a" onClick={() => goTo(l.id)}>{l.label}</button></li>)}
