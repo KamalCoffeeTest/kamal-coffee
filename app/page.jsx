@@ -340,7 +340,7 @@ const CSS = `
   @keyframes heroUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
   /* the melt — espresso dissolves into cream */
-  .melt { position: relative; height: 110px; margin-top: -1px; background: var(--espresso-deep); z-index: 10; }
+  .melt { position: relative; height: 110px; margin-top: -1px; z-index: 10; pointer-events: none; }
   .melt svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
   /* ════════ SECTIONS ════════ */
@@ -877,7 +877,7 @@ function Melt() {
   return (
     <div className="melt" aria-hidden="true">
       <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
-        <path d="M0,70 C240,110 480,20 720,45 C960,70 1200,105 1440,55 L1440,110 L0,110 Z" fill="#FBF3E2" />
+        <path d="M0,70 C240,110 480,20 720,45 C960,70 1200,105 1440,55 L1440,0 L0,0 Z" fill="var(--espresso-deep)" />
       </svg>
     </div>
   );
