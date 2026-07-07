@@ -136,7 +136,7 @@ const CSS = `
   .rv { opacity: 0; transform: translateY(36px); transition: opacity 1.5s var(--ease), transform 1.5s var(--ease); }
   .rv.vis { opacity: 1; transform: translateY(0); }
   /* ── section fade wrapper (whole sections, in AND out) ── */
-  .fade-sec { will-change: opacity, transform; }
+  .fade-sec { position: relative; z-index: 1; will-change: opacity, transform; }
 
   /* ── type primitives ── */
   .eyebrow {
@@ -274,7 +274,7 @@ const CSS = `
      Header bar on top (always visible) → video fills the rest of
      the screen below it, edge to edge, with NO text over it →
      headline / CTA band right below the video. */
-  .hero { position: relative; padding-top: 78px; background: var(--espresso-deep); color: var(--foam); }
+  .hero { position: relative; padding-top: 78px; background: var(--espresso-deep); color: var(--foam); z-index: 10; }
   .hero-frame {
     position: relative; height: calc(100svh - 78px); min-height: 420px;
     overflow: hidden; background: var(--espresso);
@@ -340,11 +340,12 @@ const CSS = `
   @keyframes heroUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
   /* the melt — espresso dissolves into cream */
-  .melt { position: relative; height: 110px; margin-top: -1px; background: var(--espresso-deep); }
+  .melt { position: relative; height: 110px; margin-top: -1px; background: var(--espresso-deep); z-index: 10; }
   .melt svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
   /* ════════ SECTIONS ════════ */
   .sec { position: relative; padding: clamp(80px, 12vh, 140px) 0; overflow: hidden; scroll-margin-top: 86px; }
+  #coffee { overflow: visible; }
 
   .deco { position: absolute; pointer-events: none; z-index: 0; opacity: 0.32; }
   .deco img { width: 100%; height: auto; }
@@ -379,7 +380,7 @@ const CSS = `
   }
   .can-hero {
     z-index: 10;
-    transform: rotate(-6deg);
+    transform: rotate(0deg);
   }
   .can-companion {
     z-index: 5;
@@ -925,8 +926,8 @@ function CanStage() {
           0
         );
         tl.fromTo(".can-hero", 
-          { rotation: -12 },
-          { rotation: -6, duration: 4.0, ease: "back.out(1.4)" },
+          { rotation: -6 },
+          { rotation: 0, duration: 4.0, ease: "back.out(1.4)" },
           0
         );
       } else {
@@ -961,8 +962,8 @@ function CanStage() {
           1.00
         );
         tl.fromTo(".can-hero",
-          { rotation: -12 },
-          { rotation: -6, duration: 4.0, ease: "back.out(1.4)" },
+          { rotation: -6 },
+          { rotation: 0, duration: 4.0, ease: "back.out(1.4)" },
           1.00
         );
       }
