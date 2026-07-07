@@ -241,7 +241,7 @@ export const CSS = `
   .nav.solid .nav-cta { color: var(--espresso); background: transparent; border-color: rgba(58,42,26,0.35); }
   .nav.solid .nav-cta:hover { background: var(--espresso); border-color: var(--espresso); color: var(--foam); }
   /* hamburger */
-  .burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; background: none; border: none; cursor: pointer; padding: 8px; }
+  .burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; padding: 8px; }
   .burger span { display: block; height: 2px; width: 100%; background: var(--foam); border-radius: 2px; transition: all .3s var(--ease); box-shadow: 0 1px 8px rgba(38,26,14,0.3); }
   .nav.solid .burger span { background: var(--espresso); box-shadow: none; }
   @media (max-width: 880px) {
@@ -394,8 +394,19 @@ export const CSS = `
     z-index: 4;
   }
   @media (max-width: 880px) {
-    .can-companion {
-      display: none !important;
+    .hero-frame {
+      height: auto;
+      aspect-ratio: 16 / 9;
+      min-height: auto;
+    }
+    .can-stage-inner {
+      height: 210px;
+    }
+    .can-left {
+      transform: translateX(-40px) translateY(12px) scale(0.8) rotate(-18deg) !important;
+    }
+    .can-right {
+      transform: translateX(40px) translateY(12px) scale(0.8) rotate(14deg) !important;
     }
   }
   .can-stage .slot { min-height: clamp(360px, 44vw, 520px); max-width: 340px; }
@@ -542,6 +553,46 @@ export const CSS = `
     }
     .find-image-container {
       display: none;
+    }
+    .ingr-desc {
+      font-size: 16px !important;
+    }
+    .allu-point p {
+      font-size: 16px !important;
+    }
+    .faq-list details p {
+      font-size: 16px !important;
+    }
+    .find-note {
+      font-size: 16px !important;
+    }
+    .story-close {
+      font-size: 16px !important;
+    }
+    .week-markets {
+      font-size: 16px !important;
+    }
+    .week-markets .mk-meta {
+      font-size: 14.5px !important;
+    }
+    .week-rest {
+      font-size: 16px !important;
+    }
+    .allu-note {
+      font-size: 14px !important;
+    }
+    .f-brand p {
+      font-size: 15px !important;
+      max-width: 100% !important;
+    }
+    .hero-sub {
+      font-size: 16px !important;
+    }
+    .sec {
+      padding: clamp(50px, 7vh, 80px) 0 !important;
+    }
+    .footer-grid {
+      gap: 32px !important;
     }
   }
 `;
@@ -937,54 +988,41 @@ function CanStage() {
         }
       });
 
-      if (isMobile) {
-        tl.fromTo(".can-hero", 
-          { y: travelY },
-          { y: 0, duration: 4.0, ease: "power3.out" },
-          0
-        );
-        tl.fromTo(".can-hero", 
-          { rotation: -6 },
-          { rotation: 0, duration: 4.0, ease: "back.out(1.4)" },
-          0
-        );
-      } else {
-        // Left can
-        tl.fromTo(".can-left",
-          { y: travelY },
-          { y: 12, duration: 3.0, ease: "power3.out" },
-          0
-        );
-        tl.fromTo(".can-left",
-          { rotation: -36 },
-          { rotation: -18, duration: 3.0, ease: "back.out(1.4)" },
-          0
-        );
+      // Left can
+      tl.fromTo(".can-left",
+        { y: travelY },
+        { y: 12, duration: 3.0, ease: "power3.out" },
+        0
+      );
+      tl.fromTo(".can-left",
+        { rotation: -36 },
+        { rotation: -18, duration: 3.0, ease: "back.out(1.4)" },
+        0
+      );
 
-        // Right can
-        tl.fromTo(".can-right",
-          { y: travelY },
-          { y: 12, duration: 3.0, ease: "power3.out" },
-          0.50
-        );
-        tl.fromTo(".can-right",
-          { rotation: 28 },
-          { rotation: 14, duration: 3.0, ease: "back.out(1.4)" },
-          0.50
-        );
+      // Right can
+      tl.fromTo(".can-right",
+        { y: travelY },
+        { y: 12, duration: 3.0, ease: "power3.out" },
+        0.50
+      );
+      tl.fromTo(".can-right",
+        { rotation: 28 },
+        { rotation: 14, duration: 3.0, ease: "back.out(1.4)" },
+        0.50
+      );
 
-        // Hero can
-        tl.fromTo(".can-hero",
-          { y: travelY },
-          { y: 0, duration: 4.0, ease: "power3.out" },
-          1.00
-        );
-        tl.fromTo(".can-hero",
-          { rotation: -6 },
-          { rotation: 0, duration: 4.0, ease: "back.out(1.4)" },
-          1.00
-        );
-      }
+      // Hero can
+      tl.fromTo(".can-hero",
+        { y: travelY },
+        { y: 0, duration: 4.0, ease: "power3.out" },
+        1.00
+      );
+      tl.fromTo(".can-hero",
+        { rotation: -6 },
+        { rotation: 0, duration: 4.0, ease: "back.out(1.4)" },
+        1.00
+      );
     }, el);
 
     return () => ctx.revert();
