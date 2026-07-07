@@ -983,7 +983,7 @@ function CanStage() {
         scrollTrigger: {
           trigger: triggerSection,
           start: "top 100%",
-          end: "top -25%",
+          end: "top 20%",
           scrub: 1,
         }
       });
