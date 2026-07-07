@@ -1438,8 +1438,8 @@ export default function App() {
     if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      lerp: 0.08,
-      wheelMultiplier: 0.9,
+      lerp: 0.12,
+      wheelMultiplier: 1.1,
       syncTouch: true,
     });
 
