@@ -935,7 +935,7 @@ function Hero() {
         <h1 className="hero-h1">Bold &amp; smooth,<br /><em>poured slow.</em></h1>
         <p className="hero-sub">Slow-brewed coffee over ice, swirled with creamy condensed oat milk. Dairy-free, plant-based, brewed in Los Angeles.</p>
         <button className="hero-cta" onClick={() => goTo("find")}>Find us this week</button>
-        <div className="hero-facts">Vegan<i>·</i>85 calories<i>·</i>90mg caffeine<i>·</i>6g net carbs</div>
+        <div className="hero-facts">85 calories<i>·</i>Vegan<i>·</i>90mg caffeine<i>·</i>6g net carbs</div>
       </div>
     </header>
   );
