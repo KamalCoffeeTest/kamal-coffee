@@ -1326,7 +1326,7 @@ function FindUs() {
             <Rv>
               <div className="eyebrow">Find us</div>
               <h2 className="h2">At the markets, every week.</h2>
-              <p className="lede">KAMAL launches where LA's food culture lives — the farmers markets. Cold cans straight from the cooler, and a friendly face behind the table.</p>
+              <p className="lede">Kamal Coffee launches where LA's food culture lives — the farmers markets. Cold cans straight from the cooler, and a friendly face behind the table.</p>
             </Rv>
             {next && (
               <Rv delay={100}>
