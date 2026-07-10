@@ -1303,7 +1303,7 @@ function Allulose() {
           </div>
         </Rv>
         <div className="allu-points">
-          <Rv delay={120}><div className="allu-point"><h4>Tastes like sugar</h4><p>Because chemically, it nearly is — the same clean sweetness, no bitter aftertaste, no artificial anything.</p></div></Rv>
+          <Rv delay={120}><div className="allu-point"><h4>Tastes like sugar</h4><p>The same clean sweetness, no bitter aftertaste, no artificial anything.</p></div></Rv>
           <Rv delay={240}><div className="allu-point"><h4>Minimal glucose impact</h4><p>Allulose has minimal effect on blood glucose and insulin, so there's no crash an hour later.</p></div></Rv>
           <Rv delay={360}><div className="allu-point"><h4>6g net carbs</h4><p>From the label: 56g total carbs − 50g allulose = 6g net carbs per can.</p></div></Rv>
         </div>
