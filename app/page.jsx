@@ -955,8 +955,12 @@ function Melt() {
 /* ─────────── the can stage ─────────── */
 function CanStage() {
   const [err, setErr] = useState(false);
+  const [streamErr, setStreamErr] = useState(false);
   const { report } = useContext(AssetCtx);
   const containerRef = useRef(null);
+  const streamRef = useRef(null);
+  const [coords, setCoords] = useState(null);
+  const [showStream, setShowStream] = useState(false);
   
   const src = img("can-render.png");
   const label = "can-render.png";
@@ -966,67 +970,150 @@ function CanStage() {
   }, [err, report]);
 
   useEffect(() => {
-    if (err) return;
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    if (streamErr) {
+      report("pour-stream.png — scroll pour stream graphic");
+    }
+  }, [streamErr, report]);
 
+  useEffect(() => {
+    if (err) return;
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const updateCoords = () => {
+      const container = containerRef.current;
+      const melt = document.querySelector(".melt");
+      const heroCan = document.querySelector(".can-hero");
+      
+      if (!container || !melt || !heroCan) {
+        setShowStream(false);
+        return;
+      }
+      
+      const containerRect = container.getBoundingClientRect();
+      const meltRect = melt.getBoundingClientRect();
+      const heroCanRect = heroCan.getBoundingClientRect();
+      
+      // Calculate coordinates relative to .can-container wrapper
+      // Center of the melt curve: x = 50%, y = 45 / 110 of its height.
+      // We overlap the stream by 14px up into the dark wave shape.
+      const meltCurveY = meltRect.top - containerRect.top + (meltRect.height * (45 / 110)) - 14;
+      
+      // Calculate top rim of the can when resting (y = 0 relative to can top).
+      // First non-transparent row is 54 out of 577 (9.36%) of the can height.
+      const canRimRestingY = heroCanRect.height * 0.0936;
+      
+      // The starting travel Y of the cans so their rims line up exactly with the wave
+      const canStartTravelY = meltCurveY - canRimRestingY;
+      
+      // Stream height matches distance from wave curve to can rim in its final resting position
+      const height = canRimRestingY - meltCurveY;
+      const width = Math.max(24, Math.min(52, heroCanRect.width * 0.12));
+      
+      setCoords({
+        top: meltCurveY,
+        width: width,
+        height: height,
+        canStartTravelY: canStartTravelY
+      });
+      setShowStream(true);
+    };
+
+    updateCoords();
+
+    const heroCanImg = document.querySelector(".can-hero");
+    if (heroCanImg) {
+      if (heroCanImg.complete) {
+        updateCoords();
+      } else {
+        heroCanImg.addEventListener("load", updateCoords);
+      }
+    }
+    
+    window.addEventListener("resize", updateCoords);
+    window.addEventListener("orientationchange", updateCoords);
+    
+    return () => {
+      window.removeEventListener("resize", updateCoords);
+      window.removeEventListener("orientationchange", updateCoords);
+      if (heroCanImg) {
+        heroCanImg.removeEventListener("load", updateCoords);
+      }
+    };
+  }, [err]);
+
+  useEffect(() => {
+    if (err) return;
     const el = containerRef.current;
     if (!el) return;
 
     const triggerSection = el.closest(".sec");
     if (!triggerSection) return;
 
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    
     const ctx = gsap.context(() => {
-      const isMobile = window.innerWidth < 880;
-      const travelY = isMobile ? "-60vh" : "-120vh";
+      if (prefersReducedMotion) {
+        // Simple fade-in fallback under prefers-reduced-motion
+        gsap.fromTo(".can-container",
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 1.0,
+            scrollTrigger: {
+              trigger: triggerSection,
+              start: "top 80%",
+              toggleActions: "play none none none"
+            }
+          }
+        );
+        return;
+      }
+
+      if (!showStream || !coords) return;
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: triggerSection,
-          start: "top 100%",
-          end: "top 20%",
-          scrub: 1,
+          start: "top 95%",
+          end: "top 15%",
+          scrub: true,
         }
       });
 
-      // Left can
-      tl.fromTo(".can-left",
-        { y: travelY },
-        { y: 12, duration: 3.0, ease: "power3.out" },
-        0
-      );
-      tl.fromTo(".can-left",
-        { rotation: -36 },
-        { rotation: -18, duration: 3.0, ease: "back.out(1.4)" },
+      // Stream pour animation
+      if (streamRef.current && !streamErr) {
+        tl.fromTo(streamRef.current,
+          { scaleY: 0, scaleX: 1 },
+          { scaleY: 1, scaleX: 0.96, ease: "none" },
+          0
+        );
+      }
+
+      // Center (Hero) can: starts tucked up, descends in sync with the pour stream
+      tl.fromTo(".can-hero",
+        { y: coords.canStartTravelY, rotation: 12 },
+        { y: 0, rotation: -6, ease: "none" },
         0
       );
 
-      // Right can
-      tl.fromTo(".can-right",
-        { y: travelY },
-        { y: 12, duration: 3.0, ease: "power3.out" },
-        0.50
-      );
-      tl.fromTo(".can-right",
-        { rotation: 28 },
-        { rotation: 14, duration: 3.0, ease: "back.out(1.4)" },
-        0.50
+      // Left can: starts tucked up, descends staggered slightly
+      tl.fromTo(".can-left",
+        { y: coords.canStartTravelY, rotation: -36 },
+        { y: 12, rotation: -18, ease: "none" },
+        0.18 // slight stagger
       );
 
-      // Hero can
-      tl.fromTo(".can-hero",
-        { y: travelY },
-        { y: 0, duration: 4.0, ease: "power3.out" },
-        1.00
-      );
-      tl.fromTo(".can-hero",
-        { rotation: -6 },
-        { rotation: 0, duration: 4.0, ease: "back.out(1.4)" },
-        1.00
+      // Right can: starts tucked up, descends staggered slightly
+      tl.fromTo(".can-right",
+        { y: coords.canStartTravelY, rotation: 28 },
+        { y: 12, rotation: 14, ease: "none" },
+        0.09 // slight stagger
       );
     }, el);
 
     return () => ctx.revert();
-  }, [err]);
+  }, [err, showStream, coords, streamErr]);
 
   if (err) {
     return (
@@ -1047,6 +1134,35 @@ function CanStage() {
         onError={() => setErr(true)}
       />
       <div className="can-container">
+        {showStream && coords && !streamErr && (
+          <div
+            style={{
+              position: "absolute",
+              top: coords.top,
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: coords.width,
+              height: coords.height,
+              zIndex: 6,
+              pointerEvents: "none",
+            }}
+          >
+            <img
+              ref={streamRef}
+              src="/images/kamal/pour-stream.png"
+              alt=""
+              onError={() => setStreamErr(true)}
+              style={{
+                width: "100%",
+                height: "100%",
+                transformOrigin: "top center",
+                transform: "scaleY(0) scaleX(1)",
+                objectFit: "fill",
+                display: "block",
+              }}
+            />
+          </div>
+        )}
         <img
           src={src}
           className="can-companion can-left"
