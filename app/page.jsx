@@ -1299,7 +1299,7 @@ function Allulose() {
           <div className="allu-head">
             <div className="eyebrow">The sweetener</div>
             <h2 className="h2">Sweet, without the sugar.</h2>
-            <p className="lede">KAMAL is sweetened exclusively with allulose — a rare sugar found naturally in figs and raisins. It's why the can tastes like dessert and reads like discipline.</p>
+            <p className="lede">Kamal Coffee is sweetened exclusively with allulose — a rare sugar found naturally in figs and raisins. It's why the can tastes like dessert and reads like discipline.</p>
           </div>
         </Rv>
         <div className="allu-points">
