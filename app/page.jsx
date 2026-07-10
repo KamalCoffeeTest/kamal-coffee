@@ -1102,7 +1102,7 @@ function TheCan() {
             <div>
               <div className="eyebrow">The coffee</div>
               <h2 className="h2">One can. Three ingredients that matter.</h2>
-              <p className="lede">Vietnamese iced coffee is bold, sweet, and silky all at once. We keep everything you love about it — and lose the dairy and the sugar crash.</p>
+              <p className="lede">Vietnamese iced coffee is bold, sweet, and silky all at once. We keep everything you love about it minus the dairy and the sugar crash.</p>
               <div className="spec-line">8.4 oz<i>·</i>90mg caffeine<i>·</i>6g net carbs<i>·</i>85 cal</div>
               <ul className="ingr-list">
                 <li><span className="ingr-name">Slow-brewed coffee</span><span className="ingr-desc">Brewed low and slow in LA, for depth without bitterness.</span></li>
