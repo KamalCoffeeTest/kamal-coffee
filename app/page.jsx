@@ -812,6 +812,8 @@ export function Nav() {
       const isHome = window.location.pathname === "/" || window.location.pathname === "";
       if (id === "story") {
         window.location.href = "/story";
+      } else if (id === "reserve") {
+        window.location.href = "/reserve";
       } else if (isHome) {
         setTimeout(() => scrollToId(id), 40);
       } else {
@@ -820,14 +822,17 @@ export function Nav() {
     }
   };
   const links = [
+    { id: "reserve", label: "Reserve" },
+    { id: "story", label: "Our Story" },
     { id: "coffee", label: "The Coffee" },
     { id: "allulose", label: "Allulose" },
     { id: "find", label: "Find Us" },
     { id: "faq", label: "FAQ" },
   ];
+  const isReserve = typeof window !== "undefined" && window.location.pathname.startsWith("/reserve");
   return (
     <>
-      <nav className={`nav ${solid ? "solid" : ""}`}>
+      <nav className={`nav ${solid || isReserve ? "solid" : ""}`}>
         <div className="nav-in">
           <button className="logo" onClick={() => {
             if (typeof window !== "undefined") {
@@ -846,7 +851,7 @@ export function Nav() {
             {links.map((l) => <li key={l.id}><button className="nav-a" onClick={() => goTo(l.id)}>{l.label}</button></li>)}
           </ul>
           <div className="nav-right">
-            <button className="nav-cta" onClick={() => goTo("story")}>Our Story</button>
+            <button className="nav-cta" onClick={() => goTo("reserve")}>Reserve</button>
             <button className="burger" onClick={() => setMenu(true)} aria-label="Open menu">
               <span /><span /><span />
             </button>
@@ -858,7 +863,7 @@ export function Nav() {
           <button className="menu-close" onClick={() => setMenu(false)} aria-label="Close menu">×</button>
           <div className="menu-mark">KAMAL</div>
           {links.map((l) => <button key={l.id} className="m-link" onClick={() => goTo(l.id)}>{l.label}</button>)}
-          <button className="m-cta" onClick={() => goTo("story")}>Our Story</button>
+          <button className="m-cta" onClick={() => goTo("reserve")}>Reserve</button>
           <a className="m-ig" href="https://instagram.com/kamal_coffee" target="_blank" rel="noopener noreferrer">@kamal_coffee</a>
         </div>
       )}
@@ -922,7 +927,13 @@ function HeroMedia() {
 }
 
 function Hero() {
-  const goTo = (id) => scrollToId(id);
+  const goTo = (id) => {
+    if (id === "reserve") {
+      window.location.href = "/reserve";
+    } else {
+      scrollToId(id);
+    }
+  };
   return (
     <header className="hero">
       {/* pure video, nothing over it — fills the screen below the header */}
@@ -934,7 +945,7 @@ function Hero() {
         <div className="hero-eyebrow">Cà phê sữa đá — Vietnamese iced coffee</div>
         <h1 className="hero-h1">Bold &amp; smooth,<br /><em>poured slow.</em></h1>
         <p className="hero-sub">Slow-brewed coffee over ice, swirled with creamy condensed oat milk. Dairy-free, plant-based, brewed in Los Angeles.</p>
-        <button className="hero-cta" onClick={() => goTo("find")}>Find us this week</button>
+        <button className="hero-cta" onClick={() => goTo("reserve")}>Reserve your cans</button>
         <div className="hero-facts">85 calories<i>·</i>Vegan<i>·</i>90mg caffeine<i>·</i>6g net carbs</div>
       </div>
     </header>
@@ -1095,7 +1106,7 @@ function TheCan() {
               <div className="spec-line">8.4 oz<i>·</i>90mg caffeine<i>·</i>6g net carbs<i>·</i>85 cal</div>
               <ul className="ingr-list">
                 <li><span className="ingr-name">Slow-brewed coffee</span><span className="ingr-desc">Brewed low and slow in LA, for depth without bitterness.</span></li>
-                <li><span className="ingr-name">Condensed oat milk</span><span className="ingr-desc">Water, oats, sunflower oil, a touch of sea salt. That's it.</span></li>
+                <li><span className="ingr-name">Condensed oat milk</span><span className="ingr-desc">Creamy condensed oat milk — no gums, no stabilizers.</span></li>
                 <li><span className="ingr-name">Allulose</span><span className="ingr-desc">A rare sugar that tastes like sugar — without the spike.</span></li>
               </ul>
               <div className="vegan-line">Always dairy-free. Always plant-based. Nothing artificial, ever.</div>
@@ -1391,6 +1402,8 @@ export function Footer() {
       const isHome = window.location.pathname === "/" || window.location.pathname === "";
       if (id === "story") {
         window.location.href = "/story";
+      } else if (id === "reserve") {
+        window.location.href = "/reserve";
       } else if (isHome) {
         scrollToId(id);
       } else {
@@ -1408,6 +1421,7 @@ export function Footer() {
             <p>Authentic Vietnamese iced coffee — dairy-free, plant-based, sweetened with allulose, and brewed in Los Angeles, California.</p>
           </div>
           <div className="f-col"><h5>Explore</h5>
+            <button onClick={() => goTo("reserve")}>Reserve</button>
             <button onClick={() => goTo("coffee")}>The Coffee</button>
             <button onClick={() => goTo("story")}>Our Story</button>
             <button onClick={() => goTo("allulose")}>Allulose</button>
