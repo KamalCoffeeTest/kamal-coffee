@@ -822,9 +822,8 @@ export function Nav() {
     }
   };
   const links = [
-    { id: "reserve", label: "Reserve" },
-    { id: "story", label: "Our Story" },
     { id: "coffee", label: "The Coffee" },
+    { id: "story", label: "Our Story" },
     { id: "allulose", label: "Allulose" },
     { id: "find", label: "Find Us" },
     { id: "faq", label: "FAQ" },
