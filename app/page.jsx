@@ -796,7 +796,9 @@ const FAQS = [
 export function Nav() {
   const [solid, setSolid] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [isReserve, setIsReserve] = useState(false);
   useEffect(() => {
+    setIsReserve(window.location.pathname.startsWith("/reserve"));
     const fn = () => setSolid(window.scrollY > window.innerHeight * 0.72);
     fn();
     window.addEventListener("scroll", fn, { passive: true });
@@ -828,7 +830,6 @@ export function Nav() {
     { id: "find", label: "Find Us" },
     { id: "faq", label: "FAQ" },
   ];
-  const isReserve = typeof window !== "undefined" && window.location.pathname.startsWith("/reserve");
   return (
     <>
       <nav className={`nav ${solid || isReserve ? "solid" : ""}`}>
