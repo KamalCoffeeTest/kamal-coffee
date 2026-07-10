@@ -25,6 +25,16 @@ export const metadata: Metadata = {
   },
   description:
     "Premium Vietnamese ready-to-drink iced coffee. Vegan, dairy-free, sweetened with allulose. Find us at farmers markets in Los Angeles and Orange County.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
   openGraph: {
     title: "Kamal Coffee",
     description:
