@@ -1071,7 +1071,7 @@ export function ReservePageClient() {
                 }} 
                 className="bridge-cta"
               >
-                See this week's markets
+                Find us at the markets
               </button>
             </div>
           </section>

@@ -473,6 +473,9 @@ export const CSS = `
   .week-markets .mk-meta { color: var(--ink-faint); font-size: 13.5px; font-weight: 350; }
   .week-markets .sep { color: var(--gold); padding: 0 10px; }
   .week-rest { font-family: var(--f-fraunces); font-style: italic; font-size: 14.5px; color: var(--ink-faint); }
+  .tbd-box { border-top: 1px solid var(--line); padding-top: 24px; position: relative; z-index: 1; }
+  .tbd-box h3 { font-family: var(--f-fraunces); font-weight: 560; font-size: 22px; color: var(--ink); margin-bottom: 12px; }
+  .tbd-box p { font-size: 15px; line-height: 1.8; color: var(--ink-soft); font-weight: 350; max-width: 58ch; }
   .find-note { margin-top: 32px; font-size: 15px; line-height: 1.8; color: var(--ink-soft); font-weight: 350; max-width: 62ch; position: relative; z-index: 1; }
   .find-note a { color: var(--orange-deep); font-weight: 600; text-decoration: none; }
   .find-note a:hover { text-decoration: underline; }
@@ -1315,6 +1318,7 @@ function Allulose() {
 
 /* ─────────── find us ─────────── */
 function FindUs() {
+  const isScheduleSet = false; // Set to true to enable the weekly market schedule list
   const next = nextMarketInfo();
   const todayIdx = new Date().getDay();
   const order = [0, 1, 2, 3, 4, 5, 6]; // Sun → Sat
@@ -1328,36 +1332,55 @@ function FindUs() {
               <h2 className="h2">At the markets, every week.</h2>
               <p className="lede">Kamal Coffee launches where LA's food culture lives — the farmers markets. Cold cans straight from the cooler, and a friendly face behind the table.</p>
             </Rv>
-            {next && (
-              <Rv delay={100}>
-                <p className="next-line">Next up <em>{next.when}</em> — {next.names}. Come say hi.</p>
-              </Rv>
+            {isScheduleSet ? (
+              <>
+                {next && (
+                  <Rv delay={100}>
+                    <p className="next-line">Next up <em>{next.when}</em> — {next.names}. Come say hi.</p>
+                  </Rv>
+                )}
+                <Rv delay={160}>
+                  <ul className="week-list">
+                    {order.map((idx) => {
+                      const d = WEEK[idx];
+                      return (
+                        <li key={d.day} className={`week-row ${d.markets.length ? "live" : ""}`}>
+                          <span className="week-day">{d.day}{idx === todayIdx && <span className="today-dot" aria-label="today" />}</span>
+                          <span className="week-markets">
+                            {d.markets.length
+                              ? d.markets.map((m, j) => (
+                                  <span key={j}>
+                                    <b>{m.n}</b> <span className="mk-meta">{m.m}</span>
+                                    {j < d.markets.length - 1 && <span className="sep">·</span>}
+                                  </span>
+                                ))
+                              : <span className="week-rest">brew &amp; restock day</span>}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Rv>
+                <Rv delay={220}>
+                  <p className="find-note">Our lineup shifts week to week — we post each week's confirmed markets on <a href="https://instagram.com/kamal_coffee" target="_blank" rel="noopener noreferrer">@kamal_coffee</a>. Days and hours can change seasonally, so check each market before heading out.</p>
+                </Rv>
+              </>
+            ) : (
+              <>
+                <Rv delay={100}>
+                  <p className="next-line">Schedules <em>To Be Announced</em></p>
+                </Rv>
+                <Rv delay={160}>
+                  <div className="tbd-box">
+                    <h3>Stay Tuned</h3>
+                    <p>We are currently finalizing our weekly farmers market circuit. Confirmed dates, locations, and hours will be posted here soon.</p>
+                  </div>
+                </Rv>
+                <Rv delay={220}>
+                  <p className="find-note">While we prepare the next drop, follow us on Instagram at <a href="https://instagram.com/kamal_coffee" target="_blank" rel="noopener noreferrer">@kamal_coffee</a> for real-time announcements, behind-the-scenes updates, and pop-up locations.</p>
+                </Rv>
+              </>
             )}
-            <Rv delay={160}>
-              <ul className="week-list">
-                {order.map((idx) => {
-                  const d = WEEK[idx];
-                  return (
-                    <li key={d.day} className={`week-row ${d.markets.length ? "live" : ""}`}>
-                      <span className="week-day">{d.day}{idx === todayIdx && <span className="today-dot" aria-label="today" />}</span>
-                      <span className="week-markets">
-                        {d.markets.length
-                          ? d.markets.map((m, j) => (
-                              <span key={j}>
-                                <b>{m.n}</b> <span className="mk-meta">{m.m}</span>
-                                {j < d.markets.length - 1 && <span className="sep">·</span>}
-                              </span>
-                            ))
-                          : <span className="week-rest">brew &amp; restock day</span>}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </Rv>
-            <Rv delay={220}>
-              <p className="find-note">Our lineup shifts week to week — we post each week's confirmed markets on <a href="https://instagram.com/kamal_coffee" target="_blank" rel="noopener noreferrer">@kamal_coffee</a>. Days and hours can change seasonally, so check each market before heading out.</p>
-            </Rv>
           </div>
           <Rv delay={260}>
             <div className="find-image-container">
